@@ -744,17 +744,29 @@ final class ProjectViewModel: ObservableObject {
 
         isBusy = true
         errorMessage = nil
+        let previousPlaybackTime = playbackTime
+        let shouldResumePlayback = isPlaying
 
         do {
             let build = try await composer.build(from: snapshot)
             let playerItem = AVPlayerItem(asset: build.composition)
             playerItem.audioMix = build.audioMix
             player.pause()
-            isPlaying = false
             player.replaceCurrentItem(with: playerItem)
             clipOffsets = build.clipOffsets
             totalDuration = build.totalDuration
-            playbackTime = 0
+            let restoredTime = min(max(previousPlaybackTime, 0), build.totalDuration)
+            let targetTime = CMTime(seconds: restoredTime, preferredTimescale: 600)
+            _ = await player.seek(to: targetTime)
+            playbackTime = restoredTime
+            syncSelectedClip(to: restoredTime)
+
+            if shouldResumePlayback {
+                player.play()
+                isPlaying = true
+            } else {
+                isPlaying = false
+            }
         } catch {
             errorMessage = error.localizedDescription
         }

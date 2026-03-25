@@ -31,7 +31,7 @@ public struct TimelineComposer {
         }
 
         let composition = AVMutableComposition()
-        guard let compositionTrack = composition.addMutableTrack(
+        guard let timelineTrack = composition.addMutableTrack(
             withMediaType: .audio,
             preferredTrackID: kCMPersistentTrackID_Invalid
         ) else {
@@ -39,17 +39,19 @@ public struct TimelineComposer {
         }
 
         let audioMix = AVMutableAudioMix()
-        let inputParameters = AVMutableAudioMixInputParameters(track: compositionTrack)
+        var inputParameters: [AVMutableAudioMixInputParameters] = []
 
         var cursor = CMTime.zero
         var offsets: [UUID: Double] = [:]
 
         for clip in playableClips {
             let duration = CMTime(seconds: clip.effectiveDuration, preferredTimescale: timeScale)
+            let timelineRange = CMTimeRange(start: cursor, duration: duration)
+
+            timelineTrack.insertEmptyTimeRange(timelineRange)
+            offsets[clip.id] = cursor.seconds
 
             if clip.isSilence {
-                compositionTrack.insertEmptyTimeRange(CMTimeRange(start: cursor, duration: duration))
-                offsets[clip.id] = cursor.seconds
                 cursor = CMTimeAdd(cursor, duration)
                 continue
             }
@@ -65,16 +67,42 @@ public struct TimelineComposer {
                 throw TimelineComposerError.noAudioTrack(sourceURL)
             }
 
-            let start = CMTime(seconds: clip.trimStart, preferredTimescale: timeScale)
-            let timeRange = CMTimeRange(start: start, duration: duration)
+            guard let clipTrack = composition.addMutableTrack(
+                withMediaType: .audio,
+                preferredTrackID: kCMPersistentTrackID_Invalid
+            ) else {
+                throw TimelineComposerError.noPlayableClips
+            }
 
-            try compositionTrack.insertTimeRange(timeRange, of: sourceTrack, at: cursor)
-            applyVolumeEnvelope(for: clip, to: inputParameters, at: cursor)
-            offsets[clip.id] = cursor.seconds
+            let start = CMTime(seconds: clip.trimStart, preferredTimescale: timeScale)
+            let sourceRange = CMTimeRange(start: start, duration: duration)
+            let gainLayers = decomposedGainLayers(for: clip.volume)
+
+            try clipTrack.insertTimeRange(sourceRange, of: sourceTrack, at: cursor)
+
+            let primaryParameters = AVMutableAudioMixInputParameters(track: clipTrack)
+            applyVolumeEnvelope(for: clip, volume: gainLayers.first ?? 1, to: primaryParameters, at: cursor)
+            inputParameters.append(primaryParameters)
+
+            if gainLayers.count > 1 {
+                for layerVolume in gainLayers.dropFirst() {
+                    guard let boostTrack = composition.addMutableTrack(
+                        withMediaType: .audio,
+                        preferredTrackID: kCMPersistentTrackID_Invalid
+                    ) else {
+                        throw TimelineComposerError.noPlayableClips
+                    }
+
+                    try boostTrack.insertTimeRange(sourceRange, of: sourceTrack, at: cursor)
+                    let boostParameters = AVMutableAudioMixInputParameters(track: boostTrack)
+                    applyVolumeEnvelope(for: clip, volume: layerVolume, to: boostParameters, at: cursor)
+                    inputParameters.append(boostParameters)
+                }
+            }
             cursor = CMTimeAdd(cursor, duration)
         }
 
-        audioMix.inputParameters = [inputParameters]
+        audioMix.inputParameters = inputParameters
 
         return TimelineBuildResult(
             composition: composition,
@@ -86,10 +114,10 @@ public struct TimelineComposer {
 
     private func applyVolumeEnvelope(
         for clip: MediaClip,
+        volume: Float,
         to inputParameters: AVMutableAudioMixInputParameters,
         at cursor: CMTime
     ) {
-        let volume = Float(clip.volume)
         let clipDuration = clip.effectiveDuration
         let clipEnd = CMTimeAdd(cursor, CMTime(seconds: clipDuration, preferredTimescale: timeScale))
         let fades = clip.normalizedFadeDurations
@@ -124,5 +152,18 @@ public struct TimelineComposer {
         } else {
             inputParameters.setVolume(volume, at: clipEnd)
         }
+    }
+
+    private func decomposedGainLayers(for volume: Double) -> [Float] {
+        var remaining = min(max(volume, 0), 4)
+        var layers: [Float] = []
+
+        while remaining > 0.0001 {
+            let layerVolume = Float(min(remaining, 1))
+            layers.append(layerVolume)
+            remaining -= Double(layerVolume)
+        }
+
+        return layers.isEmpty ? [0] : layers
     }
 }

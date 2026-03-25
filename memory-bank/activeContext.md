@@ -25,6 +25,9 @@
 - Timeline waveform secimi secili klibin araligina kilitlendi; clip sinirini asan secimler artik komsu klibe tasinmiyor
 - Waveform kesme araci tum klibi silemeyecek sekilde korumaya alindi; tam clip silme icin yan listedeki `Sil` kullanilmali
 - Click/drag ayrimi artik piksel bazli; kucuk ve hassas secimler saniye esitigi yerine imlec hareketine gore tanimlaniyor
+- Timeline composer klip-bazli audio track yapisina gecirildi; ses seviyesi ve fade degisikliklerinin preview/export tarafinda gercekten uygulanmasi hedeflendi
+- Preview rebuild artik oynatma konumunu sifirlamiyor; slider ile ses degistirirken ayni bolgede dinleyerek test etmek mumkun
+- `1.0` uzeri clip volume icin gain katmanlara ayrildi; ornegin `1.33x` bir tam-volume ve bir `0.33` volume track olarak miksleniyor
 
 ## Important Notes
 - Editor artik tek ana waveform kullaniyor; onceki iki-katmanli waveform yapisi kaldirildi
@@ -33,6 +36,8 @@
 - `swift run` senaryosunda menu cubugunda baska uygulama aktif kalirsa once app aktivasyonu dogrulanmali
 - Undo/redo kisayollari yalnizca uygulama aktifken ve first responder bir `NSTextView` degilken yakalaniyor; amac yazi alanlarinin yerel undo davranisini bozmamak
 - Waveform secimi icin drag anchor secili klip araligina clamp ediliyor; seek ise tum timeline uzerinde kalmaya devam ediyor
+- Ses slider'i yalnizca UI state degil; composer rebuild sonrasi player item audioMix zincirine bagli olmalı
+- `AVMutableAudioMixInputParameters` tarafinda boost davranisi belirsiz olabilecegi icin paralel track layering tercih edildi
 
 ## Next Steps
 - Gercek medya dosyalariyla timeline waveform seek davranisini manuel test et
@@ -40,3 +45,4 @@
 - Gerekirse timeline waveform icine otomatik scroll-to-playhead davranisi ekle
 - Undo/redo akisini import, trim, ses, fade, silme ve klip tasima uzerinde manuel dogrula
 - Hassas waveform seciminin gercek uzun medya dosyalarinda rahat kullanilip kullanilmadigini manuel dogrula
+- Ses slider'inin hem preview hem export sonucunda kulakla manuel dogrulamasini yap

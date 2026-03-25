@@ -15,11 +15,15 @@
 - `Cmd/Ctrl+Z` ve redo kisayollari
 - Secili klibe kilitli waveform secimi
 - Kazara tum klibi waveform kesme ile silmeyi engelleyen koruma
+- Klip-bazli audio track mix yapisi
+- Preview rebuild sonrasinda oynatma konumunu koruma
+- `1.0x` ustu boost icin paralel gain-layer miksleme
 
 ## In Progress
 - Gercek kullanimda timeline waveform ve `space` davranisinin manuel dogrulanmasi
 - Undo/redo davranisinin gercek duzenleme akisinda manuel dogrulanmasi
 - Hassas waveform seciminin gercek kullanimda dogrulanmasi
+- Ses slider'inin preview ve export sonucunda manuel dogrulanmasi
 
 ## Known Issues
 - `Space` kisayolunun gercek kullanımdaki Finder/Quick Look etkilesimi kullanici tarafinda tekrar kontrol edilmeli
