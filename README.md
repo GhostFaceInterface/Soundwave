@@ -1,4 +1,4 @@
-# LonerMAC
+# Soundwave
 
 SwiftUI ve AVFoundation tabanli bir macOS audio birlestirme uygulamasi.
 
@@ -46,20 +46,20 @@ Xcode ile acmak isterseniz `Package.swift` dosyasini dogrudan acabilirsiniz.
 ## Dogrulama
 ```bash
 swift build
-swiftc -o /tmp/lonermac-smoke \
-  Sources/LonerMAC/Models/MediaClip.swift \
-  Sources/LonerMAC/Models/ExportSettings.swift \
-  Sources/LonerMAC/Models/SavedProject.swift \
-  Sources/LonerMAC/Models/TimelineBuildResult.swift \
-  Sources/LonerMAC/Services/AudioWaveformService.swift \
-  Sources/LonerMAC/Services/MediaAssetLoader.swift \
-  Sources/LonerMAC/Services/TimelineComposer.swift \
-  Sources/LonerMAC/Services/ProjectPersistenceService.swift \
-  Sources/LonerMAC/Services/ExportService.swift \
+swiftc -o /tmp/Soundwave-smoke \
+  Sources/Soundwave/Models/MediaClip.swift \
+  Sources/Soundwave/Models/ExportSettings.swift \
+  Sources/Soundwave/Models/SavedProject.swift \
+  Sources/Soundwave/Models/TimelineBuildResult.swift \
+  Sources/Soundwave/Services/AudioWaveformService.swift \
+  Sources/Soundwave/Services/MediaAssetLoader.swift \
+  Sources/Soundwave/Services/TimelineComposer.swift \
+  Sources/Soundwave/Services/ProjectPersistenceService.swift \
+  Sources/Soundwave/Services/ExportService.swift \
   Scripts/SmokeCheck.swift
-/tmp/lonermac-smoke
+/tmp/Soundwave-smoke
 ```
 
 ## Performans
 Buyuk proje davranis notlari icin [PERFORMANCE.md](./PERFORMANCE.md) dosyasina bakin.
-# lonerMAC
+# Soundwave
