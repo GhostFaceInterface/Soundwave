@@ -7,8 +7,8 @@
 - `MediaAssetLoader` dosyalari okuyup waveform verisi cikarir
 - SwiftPM executable, yerel kullanim icin `script/build_and_run.sh` tarafindan `dist/Quietline.app` bundle'ina paketlenir
 - Bundle `Contents/MacOS/Quietline`, `Contents/Info.plist` ve uretilmis `Contents/Resources/AppIcon.icns` yapisini kullanir
-- Tema sistemi `QuietlineTheme` token'lari, `QuietlineBackdrop`, `HairClipMotif`, `StudioPanelModifier`, `GlassIslandModifier`, `PillButtonStyle` ve `IconButtonStyle` uzerinden merkezi yonetilir
-- Arka plan gorseli `Sources/Quietline/Resources/HitoriBackdrop.png` SwiftPM resource'u olarak islenir ve app bundle icinde `Quietline_Quietline.bundle` altinda tasinir
+- Tema sistemi `QuietlineTheme` token'lari, `QuietlineBackdrop`, `HairClipMotif`, `StudioPanelModifier`, `PillButtonStyle` ve `IconButtonStyle` uzerinden merkezi yonetilir
+- `QuietlineBackdrop` resource fotograf yerine soyut pembe-aqua gradient, geometrik bloklar ve gitar teli cizgileri kullanir
 
 ## Playback Pattern
 - `AVPlayer` preview icin tek kaynak
@@ -52,7 +52,7 @@
   - Bundle staging `dist/Quietline.app` altinda yapilir
   - Launch `/usr/bin/open -n dist/Quietline.app` ile yapilir
   - Kalici lokal kurulum gerekiyorsa ayni bundle `~/Applications/Quietline.app` altina kopyalanir
-- Gorsel tema resource wallpaper, renk ve soyut motiflerle uygulanir:
+- Gorsel tema renk ve soyut motiflerle uygulanir:
   - Pembe ana vurgu, aqua ikincil vurgu, sari/mavi toka aksanlari
-  - Yari saydam cam paneller, icerik kadar cam adalar ve koyu waveform sahnesi
+  - Acik pembe-pastel paneller ve koyu waveform sahnesi
   - App icon da ayni token ailesinden uretilir

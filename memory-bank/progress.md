@@ -39,11 +39,8 @@
 - Eski app kopyalari `dist` ve `~/Applications` altindan kaldirildi
 - Hitori Gotoh/Bocchi the Rock esintili yeni pembe-aqua-sari UI tema sistemi
 - Soyut toka motifi, gitar teli arka plan cizgileri, koyu waveform sahnesi ve yenilenmis app icon
-- Hitori wallpaper resource'u ile full-window background
-- Header navigasyonundan `Ac`, `Kaydet`, `Sessizlik` butonlarinin kaldirilmasi
-- Wallpaper'i kapatmayan yari saydam cam panel/button sistemi
-- Header, playback, footer ve bos editor durumunda full-size bloklar yerine kucuk cam adalar
-- Bos editor alaninda wallpaper'i kapatan buyuk panelin kaldirilmasi
+- Hitori wallpaper denemesi geri alindi; UI tekrar soyut pembe-aqua arka plan ve acik pastel panellere dondu
+- Header'dan `Ac`, `Kaydet` ve `Sessizlik` butonlarinin kaldirilmasi korunuyor
 
 ## In Progress
 - Yeni Hitori esintili UI'in gercek kullanim kontrasti ve hissi manuel degerlendirilecek
@@ -70,11 +67,13 @@
 - Masaustu app bundle akisi `./script/build_and_run.sh --verify` ile dogrulandi; build basarili, `dist/Quietline.app` uretildi ve process launch edildi
 - `dist/Quietline.app` ve `/Users/boe747/Applications/Quietline.app` icin `codesign --verify --deep --strict` basarili
 - Hitori wallpaper resource degisikligi sonrasi `swift build` basarili
-- `./script/build_and_run.sh --verify` basarili; `dist/Quietline.app` acildi ve resource bundle icinde `HitoriBackdrop.png` dogrulandi
+- Eski wallpaper denemesi sirasinda `dist/Quietline.app` resource bundle icinde `HitoriBackdrop.png` dogrulandi; son durumda bu resource app bundle'dan cikarildi
 - `./script/build_and_run.sh --install` basarili; `/Users/boe747/Applications/Quietline.app` guncellendi ve codesign dogrulamasi basarili
 - Cam panel gecisi sonrasi `swift build`, `./script/build_and_run.sh --verify`, `./script/build_and_run.sh --install` ve codesign dogrulamalari basarili
 - Full-size panel azaltma gecisi sonrasi `swift build`, `./script/build_and_run.sh --verify`, `./script/build_and_run.sh --install`, resource varligi ve codesign dogrulamalari basarili
 - `screencapture` ile otomatik gorsel kontrol denendi ancak macOS display erisimi `could not create image from display` hatasi verdi
+- Koyu/cam ada wallpaper denemesi geri alindiktan sonra `swift build`, `./script/build_and_run.sh --install` ve codesign dogrulamasi basarili
+- SwiftPM build cache temizlendi; kurulu `Quietline.app` kaynak wallpaper bundle'i tasimiyor, yalnizca `AppIcon.icns` resources altinda kaliyor
 - `/Users/boe747/Applications/Quietline.app` kurulumu tamamlandi; kullanici artik Finder/Spotlight/Dock uzerinden uygulama ikonuna tiklayarak acabilir
 - Rename sonrasi eski marka referanslari kaynak, dokuman ve config dosyalarinda bulunmadi
 - SwiftPM build cache temizlenip Quietline olarak yeniden build edildi; eski marka adli build artefact'i kalmadigi dogrulandi

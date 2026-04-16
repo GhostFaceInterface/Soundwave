@@ -1,9 +1,9 @@
 # Active Context
 
 ## Current Task
-1. Hitori wallpaper arka plani uzerindeki opak UI bloklarini azaltmak
-2. Buyuk full-width kartlari sadece icerik kadar cam adalara bolmek
-3. Okunabilirlik icin metin kontrastini koruyup build/install dogrulamak
+1. Basarisiz koyu/wallpaper denemesinden eski acik pembe-pastel UI'a geri donmek
+2. Gereksiz header butonlarini kaldirilmis halde korumak
+3. Build/install dogrulamasini yenilemek
 
 ## Recent Changes
 - Arayuz daha kompakt hale getirildi
@@ -59,17 +59,10 @@
 - `PillButtonStyle`, `IconButtonStyle`, panel modifier, clip row selection ve timeline waveform yeni tema token'larina tasindi
 - App icon generator pembe/aqua/sari Quietline kimligine guncellendi
 - Tema degisikligi sonrasi `swift build`, `./script/build_and_run.sh --verify`, `./script/build_and_run.sh --install` ve bundle codesign dogrulamalari basarili
-- `hitori gotoh wallpaper.png` kaynak gorseli `Sources/Quietline/Resources/HitoriBackdrop.png` olarak SwiftPM resource'a eklendi
-- `QuietlineBackdrop` artik resource bundle'dan `HitoriBackdrop` gorselini full-window background olarak kullaniyor
-- `Package.swift` icinde `Resources` islenmeye basladi; `script/build_and_run.sh` SwiftPM `.bundle` resource klasorlerini `.app/Contents/Resources` altina kopyaliyor
 - Header'dan `Ac`, `Kaydet` ve `Sessizlik` butonlari kaldirildi; `Geri Al`, `Ileri Al`, `Dosya Ekle`, `Export` kaldi
-- Resource background degisikligi sonrasi build, bundle launch, install, resource varligi ve codesign dogrulandi
-- Opak acik renkli kartlar, `ultraThinMaterial` + koyu yari saydam overlay kullanan cam yuzeylere cevrildi
-- Tema metin renkleri koyu panel varsayimindan acik kontrastli metinlere tasindi; panel border ve chip/button renkleri yari saydam hale getirildi
-- Arka plan gorselini kapatan overlay gradientleri hafifletildi
-- Header artik tek buyuk panel degil; baslik/metrikler ve toolbar ayri `glassIsland` yuzeyleri olarak ciziliyor
-- Bos editor durumunda full-width/full-height panel kaldirildi; yalnizca aciklama metni kucuk cam ada icinde duruyor ve wallpaper editor alaninda gorunur kaliyor
-- Playback ve footer panelleri `glassIsland` modifier'ina tasindi; sidebar panel opakligi dusuruldu
+- Koyu/cam ada wallpaper denemesi kullanici tarafindan reddedildi; UI tekrar eski acik pembe-pastel panel duzenine tasindi
+- `QuietlineBackdrop` artik resource fotografi degil soyut pembe-aqua gradient, geometrik bloklar ve gitar teli cizgileri kullaniyor
+- `Package.swift` kaynak `Resources` klasorunu exclude ediyor; temiz build sonrasi kurulu app bundle'inda yalnizca `AppIcon.icns` kaliyor
 
 ## Important Notes
 - Editor artik tek ana waveform kullaniyor; onceki iki-katmanli waveform yapisi kaldirildi
@@ -91,9 +84,7 @@
 - Uygulamayi gercek macOS app olarak acmak icin ham SwiftPM executable degil `dist/Quietline.app` bundle'i kullanilmali; `script/build_and_run.sh` bu bundle'i her build'de yeniden sahneler
 - Kalici kullanici kurulumu icin `script/build_and_run.sh --install` bundle'i `~/Applications/Quietline.app` altina kopyalar; bu akisin Codex tarafinda kullanici onayi ile calistigi dogrulandi
 - Eski marka ismi source tree, package metadata, docs ve lokal app kurulumunda temizlendi
-- Arka plan gorseli artik SwiftPM resource olarak bundle'a gomuludur; `.app` staging sirasinda resource bundle kopyalanmalidir
-- Wallpaper'i gostermek icin ana paneller opak olmamali; `StudioPanelModifier`, `PillButtonStyle` ve `IconButtonStyle` cam/transparent yuzey standardini tasir
-- Wallpaper'i gercekten gostermek icin sadece opakligi azaltmak yetmez; bos veya genis alanlarda full-size panel kullanilmamali. Bu alanlarda `glassIsland` ile icerik kadar yuzey kullanilmali.
+- Wallpaper/cam ada denemesi urunun hissini bozdu; simdilik tercih edilen yol acik pembe-pastel kartlar ve soyut Hitori esintili arka plan.
 
 ## Next Steps
 - Yeni Hitori esintili UI'i gercek ekran kullaniminda okunabilirlik ve kontrast acisindan manuel gozden gecir

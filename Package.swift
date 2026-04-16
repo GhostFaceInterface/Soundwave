@@ -17,9 +17,7 @@ let package = Package(
         .executableTarget(
             name: "Quietline",
             path: "Sources/Quietline",
-            resources: [
-                .process("Resources")
-            ]
+            exclude: ["Resources"]
         )
     ]
 )
