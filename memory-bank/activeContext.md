@@ -1,9 +1,9 @@
 # Active Context
 
 ## Current Task
-1. README'yi Hitori Gotoh/Bocchi temali, gorselli ve daha eglenceli hale getirmek
-2. `pics for readme` klasorundeki tum gif ve kullanim gorsellerini README icinde kullanmak
-3. Kurulum, kullanim, export opsiyonlari ve gelistirici notlarini netlestirmek
+1. README'yi daha dogal bir dille Hitori Gotoh/Bocchi temali hale getirmek
+2. `pics for readme` klasorunden yalnizca 3 kullanim gorselini kullanmak
+3. Hareketli icerik icin kullanicinin verdigi Tenor GIF linklerini kullanmak
 
 ## Recent Changes
 - Arayuz daha kompakt hale getirildi
@@ -63,8 +63,10 @@
 - Koyu/cam ada wallpaper denemesi kullanici tarafindan reddedildi; UI tekrar eski acik pembe-pastel panel duzenine tasindi
 - `QuietlineBackdrop` artik resource fotografi degil soyut pembe-aqua gradient, geometrik bloklar ve gitar teli cizgileri kullaniyor
 - `Package.swift` kaynak `Resources` klasorunu exclude ediyor; temiz build sonrasi kurulu app bundle'inda yalnizca `AppIcon.icns` kaliyor
-- README, `pics for readme` altindaki Hitori wallpaper, 3 kullanim gorseli, gifler ve webp mood gorseliyle yeniden yazildi
-- `pics for readme ` klasor adindaki sondaki bosluk temizlenerek klasor `pics for readme` haline getirildi; README linkleri URL-encoded path kullaniyor
+- README, daha dogal Turkce metinle yeniden sadeleştirildi
+- README artik yerelde yalnizca `pics for readme/Ana bakış.png`, `Kullanım.png` ve `detay.png` gorsellerini kullaniyor
+- README'deki hareketli Hitori/Bocchi icerikleri kullanicinin verdigi 4 Tenor URL'sinin dogrudan `media1.tenor.com` GIF linklerinden geliyor
+- Yerel eski GIF/WEBP README referanslari kaldirildi
 
 ## Important Notes
 - Editor artik tek ana waveform kullaniyor; onceki iki-katmanli waveform yapisi kaldirildi
@@ -87,7 +89,8 @@
 - Kalici kullanici kurulumu icin `script/build_and_run.sh --install` bundle'i `~/Applications/Quietline.app` altina kopyalar; bu akisin Codex tarafinda kullanici onayi ile calistigi dogrulandi
 - Eski marka ismi source tree, package metadata, docs ve lokal app kurulumunda temizlendi
 - Wallpaper/cam ada denemesi urunun hissini bozdu; simdilik tercih edilen yol acik pembe-pastel kartlar ve soyut Hitori esintili arka plan.
-- README gorselleri repo ici `pics for readme` klasorunden referanslanir; dosya adlarindaki bosluk ve Turkce karakterler markdown linklerinde URL-encoded tutulmali.
+- README'de yerel gorseller repo ici `pics for readme` klasorunden referanslanir; dosya adlarindaki bosluk ve Turkce karakterler markdown linklerinde URL-encoded tutulmali.
+- README'deki Tenor GIF'ler sayfa linki degil dogrudan `media1.tenor.com` GIF URL'si olarak gomulmeli; ilk GIF genis, diger uc GIF kare formatinda yerlesmeli.
 
 ## Next Steps
 - Yeni Hitori esintili UI'i gercek ekran kullaniminda okunabilirlik ve kontrast acisindan manuel gozden gecir

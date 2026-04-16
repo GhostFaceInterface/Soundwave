@@ -41,8 +41,9 @@
 - Soyut toka motifi, gitar teli arka plan cizgileri, koyu waveform sahnesi ve yenilenmis app icon
 - Hitori wallpaper denemesi geri alindi; UI tekrar soyut pembe-aqua arka plan ve acik pastel panellere dondu
 - Header'dan `Ac`, `Kaydet` ve `Sessizlik` butonlarinin kaldirilmasi korunuyor
-- README Hitori Gotoh/Bocchi temali, renkli badge'li, gifli ve uygulama ekran gorselleriyle zenginlestirildi
-- `pics for readme` klasorundeki wallpaper, 3 kullanim gorseli, 4 gif ve 1 webp README icinde kullaniliyor
+- README Hitori Gotoh/Bocchi temali, renkli badge'li, Tenor GIF'li ve uygulama ekran gorselleriyle zenginlestirildi
+- `pics for readme` klasorunden yalnizca 3 kullanim gorseli README icinde kullaniliyor
+- Yerel eski GIF/WEBP README kullanimi kaldirildi; hareketli icerik 4 Tenor GIF URL'sinden geliyor
 
 ## In Progress
 - Yeni Hitori esintili UI'in gercek kullanim kontrasti ve hissi manuel degerlendirilecek
