@@ -37,17 +37,27 @@ func drawIcon(pixels: CGFloat) -> NSImage {
     let radius = pixels * 0.2
     let backgroundPath = NSBezierPath(roundedRect: rect, xRadius: radius, yRadius: radius)
     let background = NSGradient(colors: [
-        NSColor(calibratedRed: 0.05, green: 0.06, blue: 0.07, alpha: 1),
-        NSColor(calibratedRed: 0.12, green: 0.15, blue: 0.16, alpha: 1)
+        NSColor(calibratedRed: 1.00, green: 0.72, blue: 0.84, alpha: 1),
+        NSColor(calibratedRed: 0.58, green: 0.90, blue: 0.94, alpha: 1)
     ])
-    background?.draw(in: backgroundPath, angle: 90)
+    background?.draw(in: backgroundPath, angle: 135)
 
     let innerRect = rect.insetBy(dx: pixels * 0.13, dy: pixels * 0.13)
     let innerPath = NSBezierPath(roundedRect: innerRect, xRadius: pixels * 0.12, yRadius: pixels * 0.12)
-    NSColor(calibratedRed: 0.90, green: 0.96, blue: 0.86, alpha: 0.08).setFill()
+    NSColor(calibratedRed: 0.13, green: 0.11, blue: 0.18, alpha: 0.86).setFill()
     innerPath.fill()
 
-    let waveColor = NSColor(calibratedRed: 0.57, green: 0.91, blue: 0.74, alpha: 1)
+    let clipSize = pixels * 0.16
+    let clipY = pixels * 0.68
+    let blueClip = NSBezierPath(roundedRect: NSRect(x: pixels * 0.25, y: clipY, width: clipSize, height: clipSize), xRadius: pixels * 0.025, yRadius: pixels * 0.025)
+    NSColor(calibratedRed: 0.16, green: 0.48, blue: 0.95, alpha: 1).setFill()
+    blueClip.fill()
+
+    let yellowClip = NSBezierPath(roundedRect: NSRect(x: pixels * 0.41, y: clipY, width: clipSize, height: clipSize), xRadius: pixels * 0.025, yRadius: pixels * 0.025)
+    NSColor(calibratedRed: 1.00, green: 0.83, blue: 0.17, alpha: 1).setFill()
+    yellowClip.fill()
+
+    let waveColor = NSColor(calibratedRed: 1.00, green: 0.52, blue: 0.70, alpha: 1)
     waveColor.setStroke()
 
     let midY = pixels * 0.50
@@ -72,7 +82,7 @@ func drawIcon(pixels: CGFloat) -> NSImage {
     playPath.line(to: NSPoint(x: pixels * 0.44, y: pixels * 0.69))
     playPath.line(to: NSPoint(x: pixels * 0.68, y: pixels * 0.50))
     playPath.close()
-    NSColor(calibratedWhite: 1, alpha: 0.88).setFill()
+    NSColor(calibratedRed: 0.58, green: 0.90, blue: 0.94, alpha: 0.95).setFill()
     playPath.fill()
 
     let highlight = NSBezierPath(

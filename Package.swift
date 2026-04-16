@@ -16,7 +16,10 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "Quietline",
-            path: "Sources/Quietline"
+            path: "Sources/Quietline",
+            resources: [
+                .process("Resources")
+            ]
         )
     ]
 )

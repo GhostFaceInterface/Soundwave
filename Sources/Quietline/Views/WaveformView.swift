@@ -7,7 +7,11 @@ struct WaveformView: View {
         Canvas { context, size in
             let step = size.width / CGFloat(max(samples.count, 1))
             let midY = size.height / 2
-            let activeGradient = Gradient(colors: [QuietlineTheme.accentSoft, QuietlineTheme.accent])
+            let activeGradient = Gradient(colors: [
+                QuietlineTheme.accentSoft,
+                QuietlineTheme.accent,
+                QuietlineTheme.accentSecondary
+            ])
             let shading = GraphicsContext.Shading.linearGradient(
                 activeGradient,
                 startPoint: CGPoint(x: 0, y: 0),
@@ -30,11 +34,11 @@ struct WaveformView: View {
             }
         }
         .background(
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(QuietlineTheme.panelSecondary)
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(QuietlineTheme.stageInkSoft)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(QuietlineTheme.border, lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(QuietlineTheme.accent.opacity(0.38), lineWidth: 1)
                 )
         )
     }

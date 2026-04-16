@@ -11,7 +11,7 @@ Quietline, SwiftUI ve AVFoundation tabanli bir macOS audio birlestirme ve duzenl
 - Sonucu `.m4a`, `.caf` veya video gerekiyorsa `.mp4` olarak export etmek
 
 ## Current UX Direction
-- Hafif, kompakt ve editor odakli bir macOS arayuzu
+- Hitori Gotoh/Bocchi the Rock esintili, pembe-aqua-sari aksanli, editor odakli bir macOS arayuzu
 - Solda klip listesi, sagda playback ve waveform editor
 - Scroll edilebilir waveform ve dogrudan bolge silme
 

@@ -32,11 +32,11 @@ struct TimelineWaveformView: View {
 
             ScrollView(.horizontal) {
                 ZStack(alignment: .topLeading) {
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .fill(QuietlineTheme.panelSecondary)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(QuietlineTheme.stageInkSoft)
 
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(QuietlineTheme.border, lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(QuietlineTheme.accent.opacity(0.40), lineWidth: 1)
 
                     gridOverlay
                         .padding(.vertical, 16)
@@ -50,7 +50,7 @@ struct TimelineWaveformView: View {
                             let visibleSamples = strideSamples(clip.samples, targetCount: max(Int(clipWidth / 4), 20))
                             let step = clipWidth / CGFloat(max(visibleSamples.count, 1))
                             let centerY = height / 2
-                            let gradient = Gradient(colors: [clip.color.opacity(0.34), clip.color])
+                            let gradient = Gradient(colors: [clip.color.opacity(0.42), clip.color, QuietlineTheme.hairClipYellow.opacity(0.86)])
                             let shading = GraphicsContext.Shading.linearGradient(
                                 gradient,
                                 startPoint: CGPoint(x: startX, y: 0),
@@ -58,9 +58,9 @@ struct TimelineWaveformView: View {
                             )
 
                             let clipRect = CGRect(x: startX, y: 14, width: clipWidth, height: height - 28)
-                            let clipPath = Path(roundedRect: clipRect, cornerRadius: 14)
-                            context.fill(clipPath, with: .color(clip.color.opacity(selectedClipID == clip.id ? 0.16 : 0.08)))
-                            context.stroke(clipPath, with: .color(clip.color.opacity(selectedClipID == clip.id ? 0.55 : 0.22)), lineWidth: 1)
+                            let clipPath = Path(roundedRect: clipRect, cornerRadius: 8)
+                            context.fill(clipPath, with: .color(clip.color.opacity(selectedClipID == clip.id ? 0.18 : 0.08)))
+                            context.stroke(clipPath, with: .color(clip.color.opacity(selectedClipID == clip.id ? 0.78 : 0.28)), lineWidth: 1)
 
                             for index in visibleSamples.indices {
                                 let amplitude = max(CGFloat(visibleSamples[index]), 0.04)
@@ -78,7 +78,7 @@ struct TimelineWaveformView: View {
 
                         let playheadX = xPosition(for: playheadTime, width: size.width)
                         let playheadRect = CGRect(x: playheadX - 1.25, y: 8, width: 2.5, height: height - 16)
-                        context.fill(Path(roundedRect: playheadRect, cornerRadius: 1.25), with: .color(QuietlineTheme.textPrimary))
+                        context.fill(Path(roundedRect: playheadRect, cornerRadius: 1.25), with: .color(QuietlineTheme.hairClipYellow))
                     }
 
                     labelsOverlay(width: contentWidth)
@@ -89,7 +89,7 @@ struct TimelineWaveformView: View {
                 .gesture(selectionGesture(contentWidth: contentWidth))
             }
             .scrollIndicators(.hidden)
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
     }
 
@@ -97,7 +97,7 @@ struct TimelineWaveformView: View {
         VStack(spacing: 0) {
             ForEach(0..<4, id: \.self) { index in
                 Rectangle()
-                    .fill(index == 2 ? QuietlineTheme.borderStrong : QuietlineTheme.border.opacity(0.6))
+                    .fill(index == 2 ? QuietlineTheme.hairClipYellow.opacity(0.28) : QuietlineTheme.panelElevated.opacity(0.12))
                     .frame(height: 1)
                 if index < 3 {
                     Spacer()
@@ -115,7 +115,7 @@ struct TimelineWaveformView: View {
 
                 Text(clip.title)
                     .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundStyle(QuietlineTheme.textSecondary)
+                    .foregroundStyle(QuietlineTheme.panelElevated.opacity(0.72))
                     .lineLimit(1)
                     .frame(width: clipWidth, alignment: .leading)
                     .offset(x: startX + 8, y: 18)
@@ -133,11 +133,11 @@ struct TimelineWaveformView: View {
         let selectionWidth = xPosition(for: selection.upperBound, width: width) - startX
 
         return AnyView(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .fill(QuietlineTheme.selectionOverlay)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .stroke(QuietlineTheme.textPrimary.opacity(0.45), style: StrokeStyle(lineWidth: 1.5, dash: [7, 4]))
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(QuietlineTheme.hairClipYellow.opacity(0.82), style: StrokeStyle(lineWidth: 1.5, dash: [7, 4]))
                 )
                 .frame(width: max(selectionWidth, 2), height: height - 34)
                 .offset(x: startX, y: 17)

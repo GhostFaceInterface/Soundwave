@@ -1,9 +1,9 @@
 # Active Context
 
 ## Current Task
-1. Uygulama adini Quietline olarak sabitlemek
-2. Eski marka isimlerini kaynak, paket, bundle, dokuman ve kurulum artefact'lerinden kaldirmak
-3. Quietline build, bundle launch ve yerel kurulum akisini dogrulamak
+1. Hitori wallpaper arka plani uzerindeki opak UI bloklarini azaltmak
+2. Buyuk full-width kartlari sadece icerik kadar cam adalara bolmek
+3. Okunabilirlik icin metin kontrastini koruyup build/install dogrulamak
 
 ## Recent Changes
 - Arayuz daha kompakt hale getirildi
@@ -53,6 +53,23 @@
 - SwiftPM package/product/target adi `Quietline`, kaynak klasoru `Sources/Quietline`, app entrypoint dosyasi `QuietlineApp.swift` oldu
 - UI basligi, pencere basligi, varsayilan proje dosyasi, temp dosya prefix'i, dispatch queue label'i ve bundle id `com.quietline.app` olarak guncellendi
 - Eski app kopyalari lokal kurulum ve dist klasorlerinden kaldirildi
+- Hitori Gotoh referansindan turetilen pembe sac/esofman, aqua goz, mavi-sari kup toka ve gitar teli motifleriyle yeni Quietline tema sistemi eklendi
+- Beige/monoton panel dili yerine pembe-aqua-sari aksanli, koyu waveform sahnesi ve toka motifli arka plan kullanilmaya baslandi
+- `QuietlineBackdrop` ve `HairClipMotif` SwiftUI cizimleri eklendi; telifli karakter gorseli kopyalanmadan soyut tema dili kuruldu
+- `PillButtonStyle`, `IconButtonStyle`, panel modifier, clip row selection ve timeline waveform yeni tema token'larina tasindi
+- App icon generator pembe/aqua/sari Quietline kimligine guncellendi
+- Tema degisikligi sonrasi `swift build`, `./script/build_and_run.sh --verify`, `./script/build_and_run.sh --install` ve bundle codesign dogrulamalari basarili
+- `hitori gotoh wallpaper.png` kaynak gorseli `Sources/Quietline/Resources/HitoriBackdrop.png` olarak SwiftPM resource'a eklendi
+- `QuietlineBackdrop` artik resource bundle'dan `HitoriBackdrop` gorselini full-window background olarak kullaniyor
+- `Package.swift` icinde `Resources` islenmeye basladi; `script/build_and_run.sh` SwiftPM `.bundle` resource klasorlerini `.app/Contents/Resources` altina kopyaliyor
+- Header'dan `Ac`, `Kaydet` ve `Sessizlik` butonlari kaldirildi; `Geri Al`, `Ileri Al`, `Dosya Ekle`, `Export` kaldi
+- Resource background degisikligi sonrasi build, bundle launch, install, resource varligi ve codesign dogrulandi
+- Opak acik renkli kartlar, `ultraThinMaterial` + koyu yari saydam overlay kullanan cam yuzeylere cevrildi
+- Tema metin renkleri koyu panel varsayimindan acik kontrastli metinlere tasindi; panel border ve chip/button renkleri yari saydam hale getirildi
+- Arka plan gorselini kapatan overlay gradientleri hafifletildi
+- Header artik tek buyuk panel degil; baslik/metrikler ve toolbar ayri `glassIsland` yuzeyleri olarak ciziliyor
+- Bos editor durumunda full-width/full-height panel kaldirildi; yalnizca aciklama metni kucuk cam ada icinde duruyor ve wallpaper editor alaninda gorunur kaliyor
+- Playback ve footer panelleri `glassIsland` modifier'ina tasindi; sidebar panel opakligi dusuruldu
 
 ## Important Notes
 - Editor artik tek ana waveform kullaniyor; onceki iki-katmanli waveform yapisi kaldirildi
@@ -74,8 +91,12 @@
 - Uygulamayi gercek macOS app olarak acmak icin ham SwiftPM executable degil `dist/Quietline.app` bundle'i kullanilmali; `script/build_and_run.sh` bu bundle'i her build'de yeniden sahneler
 - Kalici kullanici kurulumu icin `script/build_and_run.sh --install` bundle'i `~/Applications/Quietline.app` altina kopyalar; bu akisin Codex tarafinda kullanici onayi ile calistigi dogrulandi
 - Eski marka ismi source tree, package metadata, docs ve lokal app kurulumunda temizlendi
+- Arka plan gorseli artik SwiftPM resource olarak bundle'a gomuludur; `.app` staging sirasinda resource bundle kopyalanmalidir
+- Wallpaper'i gostermek icin ana paneller opak olmamali; `StudioPanelModifier`, `PillButtonStyle` ve `IconButtonStyle` cam/transparent yuzey standardini tasir
+- Wallpaper'i gercekten gostermek icin sadece opakligi azaltmak yetmez; bos veya genis alanlarda full-size panel kullanilmamali. Bu alanlarda `glassIsland` ile icerik kadar yuzey kullanilmali.
 
 ## Next Steps
+- Yeni Hitori esintili UI'i gercek ekran kullaniminda okunabilirlik ve kontrast acisindan manuel gozden gecir
 - Gercek medya dosyalariyla timeline waveform seek davranisini manuel test et
 - `Space` kisayolunun text-entry davranisini manuel test et
 - Gerekirse timeline waveform icine otomatik scroll-to-playhead davranisi ekle

@@ -96,11 +96,14 @@ stage_app() {
 
   local built_binary
   built_binary="$(build_binary)"
+  local build_dir
+  build_dir="$(dirname "$built_binary")"
 
   rm -rf "$APP_BUNDLE"
   mkdir -p "$APP_MACOS" "$APP_RESOURCES"
   cp "$built_binary" "$APP_BINARY"
   chmod +x "$APP_BINARY"
+  find "$build_dir" -maxdepth 1 \( -name '*.resources' -o -name '*.bundle' \) -type d -exec cp -R {} "$APP_RESOURCES/" \;
 
   generate_icon
   write_info_plist

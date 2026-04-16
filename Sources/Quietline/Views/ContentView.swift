@@ -13,12 +13,12 @@ struct ContentView: View {
         GridItem(.flexible(), spacing: 12)
     ]
     private let clipPalette: [Color] = [
-        Color(red: 0.78, green: 0.35, blue: 0.25),
-        Color(red: 0.33, green: 0.52, blue: 0.48),
-        Color(red: 0.58, green: 0.44, blue: 0.73),
-        Color(red: 0.79, green: 0.59, blue: 0.24),
-        Color(red: 0.29, green: 0.49, blue: 0.74),
-        Color(red: 0.67, green: 0.39, blue: 0.48)
+        QuietlineTheme.accent,
+        QuietlineTheme.accentSecondary,
+        QuietlineTheme.hairClipYellow,
+        QuietlineTheme.hairClipBlue,
+        Color(red: 0.64, green: 0.34, blue: 0.92),
+        Color(red: 0.18, green: 0.76, blue: 0.52)
     ]
 
     private enum FocusedField: Hashable {
@@ -27,8 +27,7 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            QuietlineTheme.backgroundGradient
-                .ignoresSafeArea()
+            QuietlineBackdrop()
 
             VStack(spacing: 14) {
                 headerBar
@@ -89,12 +88,15 @@ struct ContentView: View {
 
     private var headerBar: some View {
         HStack(alignment: .top, spacing: 18) {
+            HairClipMotif(size: 64)
+                .padding(.top, 2)
+
             VStack(alignment: .leading, spacing: 8) {
                 Text("Quietline")
-                    .font(.system(size: 30, weight: .heavy, design: .rounded))
+                    .font(.system(size: 34, weight: .black, design: .rounded))
                     .foregroundStyle(QuietlineTheme.textPrimary)
 
-                Text("Audio birlestir, dinle ve dalga gorunumunden direkt duzenle.")
+                Text("Pembe gitar enerjisiyle klipleri birlestir, temizle ve akisa sok.")
                     .font(.system(size: 14, weight: .medium, design: .rounded))
                     .foregroundStyle(QuietlineTheme.textSecondary)
 
@@ -116,16 +118,6 @@ struct ContentView: View {
                     viewModel.redo()
                 }
                 .disabled(!viewModel.canRedo)
-                toolbarButton("Ac", systemImage: "folder") {
-                    viewModel.openProject()
-                }
-                toolbarButton("Kaydet", systemImage: "square.and.arrow.down") {
-                    viewModel.saveProject()
-                }
-                .disabled(viewModel.clips.isEmpty)
-                toolbarButton("Sessizlik", systemImage: "speaker.slash") {
-                    viewModel.addSilenceClip()
-                }
                 toolbarButton("Dosya Ekle", systemImage: "plus") {
                     viewModel.isImporterPresented = true
                 }
@@ -134,15 +126,15 @@ struct ContentView: View {
                 }
                 .buttonStyle(
                     PillButtonStyle(
-                        fill: QuietlineTheme.accent,
+                        fill: QuietlineTheme.stageInk,
                         foreground: .white,
-                        stroke: QuietlineTheme.accent.opacity(0.35)
+                        stroke: QuietlineTheme.hairClipYellow.opacity(0.65)
                     )
                 )
                 .disabled(viewModel.clips.isEmpty || viewModel.isBusy || viewModel.isExporting)
             }
         }
-        .studioPanel(padding: 18, fill: QuietlineTheme.panel)
+        .studioPanel(padding: 18, fill: QuietlineTheme.panelElevated)
     }
 
     private var sidebar: some View {
@@ -166,13 +158,11 @@ struct ContentView: View {
 
             if viewModel.clips.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
-                    Image(systemName: "waveform.badge.plus")
-                        .font(.system(size: 28, weight: .semibold))
-                        .foregroundStyle(QuietlineTheme.accent)
-                    Text("Bos proje")
+                    HairClipMotif(size: 48)
+                    Text("Ilk riff bekleniyor")
                         .font(.system(size: 22, weight: .bold, design: .rounded))
                         .foregroundStyle(QuietlineTheme.textPrimary)
-                    Text("Audio veya video dosyalarini ekle ya da Finder'dan buraya birak.")
+                    Text("Audio veya video dosyalarini ekle; timeline buradan pembe bir sete donussun.")
                         .font(.system(size: 14, weight: .medium, design: .rounded))
                         .foregroundStyle(QuietlineTheme.textSecondary)
                     Spacer()
@@ -180,11 +170,11 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .padding(14)
                 .background(
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(QuietlineTheme.panelSecondary)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(QuietlineTheme.panelMuted)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                .stroke(QuietlineTheme.borderStrong, style: StrokeStyle(lineWidth: 1, dash: [7, 5]))
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .stroke(QuietlineTheme.accent.opacity(0.34), style: StrokeStyle(lineWidth: 1.5, dash: [7, 5]))
                         )
                 )
             } else {
@@ -217,7 +207,7 @@ struct ContentView: View {
                 .disabled(viewModel.selectedClip == nil)
             }
         }
-        .studioPanel(fill: QuietlineTheme.panel)
+        .studioPanel(fill: QuietlineTheme.panelElevated)
     }
 
     private var editor: some View {
@@ -246,7 +236,7 @@ struct ContentView: View {
                     Text("Playback")
                         .font(.system(size: 20, weight: .heavy, design: .rounded))
                         .foregroundStyle(QuietlineTheme.textPrimary)
-                    Text("Tek tus ile oynat/durdur. Secili klipten baslatmak icin yan butonu kullan.")
+                    Text("Tek tus ile oynat/durdur. Gitar teli gibi akisi takip et.")
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundStyle(QuietlineTheme.textSecondary)
                 }
@@ -280,9 +270,9 @@ struct ContentView: View {
                 }
                 .buttonStyle(
                     IconButtonStyle(
-                        fill: QuietlineTheme.textPrimary,
-                        foreground: QuietlineTheme.panel,
-                        stroke: QuietlineTheme.textPrimary.opacity(0.18),
+                        fill: QuietlineTheme.accent,
+                        foreground: .white,
+                        stroke: QuietlineTheme.stageInk.opacity(0.22),
                         size: 52
                     )
                 )
@@ -314,7 +304,7 @@ struct ContentView: View {
                 }
             }
         }
-        .studioPanel(fill: QuietlineTheme.panel)
+        .studioPanel(fill: QuietlineTheme.panelElevated)
     }
 
     private func mediaEditor(_ clip: MediaClip) -> some View {
@@ -607,10 +597,10 @@ struct ContentView: View {
                     .padding(.horizontal, 12)
                     .padding(.vertical, 10)
                     .background(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .fill(QuietlineTheme.panelSecondary)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
                                     .stroke(QuietlineTheme.border, lineWidth: 1)
                             )
                     )
@@ -623,9 +613,9 @@ struct ContentView: View {
                     }
                     .buttonStyle(
                         PillButtonStyle(
-                            fill: viewModel.exportSettings.format == format ? QuietlineTheme.textPrimary : QuietlineTheme.panelMuted,
+                            fill: viewModel.exportSettings.format == format ? QuietlineTheme.accent : QuietlineTheme.panelMuted,
                             foreground: viewModel.exportSettings.format == format ? .white : QuietlineTheme.textPrimary,
-                            stroke: viewModel.exportSettings.format == format ? QuietlineTheme.textPrimary.opacity(0.15) : QuietlineTheme.border
+                            stroke: viewModel.exportSettings.format == format ? QuietlineTheme.stageInk.opacity(0.18) : QuietlineTheme.border
                         )
                     )
                 }
@@ -647,9 +637,11 @@ struct ContentView: View {
             Text("Duzenleyici hazir")
                 .font(.system(size: 28, weight: .heavy, design: .rounded))
                 .foregroundStyle(QuietlineTheme.textPrimary)
-            Text("Soldan bir klip secildiginde scroll edilebilir waveform, oynatma kafasi ve bolge silme araclari burada acilir.")
+            Text("Soldan bir klip sec; waveform, oynatma kafasi ve kesme araclari sahneye gelsin.")
                 .font(.system(size: 14, weight: .medium, design: .rounded))
                 .foregroundStyle(QuietlineTheme.textSecondary)
+            HairClipMotif(size: 72)
+                .padding(.top, 14)
             Spacer(minLength: 0)
         }
         .frame(maxWidth: .infinity, minHeight: 420, alignment: .topLeading)
@@ -674,7 +666,7 @@ struct ContentView: View {
 
             Spacer()
 
-            Text("Scroll waveform + direct cut")
+            Text("pink strings + direct cut")
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                 .foregroundStyle(QuietlineTheme.textSecondary)
         }
@@ -683,17 +675,15 @@ struct ContentView: View {
     }
 
     private var dropOverlay: some View {
-        RoundedRectangle(cornerRadius: 24, style: .continuous)
-            .fill(Color.white.opacity(0.74))
+        RoundedRectangle(cornerRadius: 8, style: .continuous)
+            .fill(QuietlineTheme.panelElevated.opacity(0.84))
             .overlay(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .stroke(QuietlineTheme.accent, style: StrokeStyle(lineWidth: 2, dash: [10, 6]))
             )
             .overlay {
                 VStack(spacing: 10) {
-                    Image(systemName: "square.and.arrow.down.on.square.fill")
-                        .font(.system(size: 34))
-                        .foregroundStyle(QuietlineTheme.accent)
+                    HairClipMotif(size: 62)
                     Text("Dosyalari buraya birak")
                         .font(.system(size: 24, weight: .heavy, design: .rounded))
                         .foregroundStyle(QuietlineTheme.textPrimary)
@@ -780,12 +770,17 @@ struct ContentView: View {
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(isSelected ? color : QuietlineTheme.panelSecondary)
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(isSelected ? QuietlineTheme.stageInk : QuietlineTheme.panelSecondary)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .stroke(isSelected ? color.opacity(0.95) : color.opacity(0.16), lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(isSelected ? color.opacity(0.95) : color.opacity(0.22), lineWidth: 1.5)
                     )
+                    .overlay(alignment: .leading) {
+                        Rectangle()
+                            .fill(color)
+                            .frame(width: 5)
+                    }
             )
         }
         .buttonStyle(.plain)
@@ -827,10 +822,10 @@ struct ContentView: View {
         .padding(.horizontal, 10)
         .padding(.vertical, 8)
         .background(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .fill(QuietlineTheme.panelSecondary)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .stroke(QuietlineTheme.border, lineWidth: 1)
                 )
         )
@@ -860,10 +855,10 @@ struct ContentView: View {
         }
         .padding(14)
         .background(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .fill(QuietlineTheme.panelSecondary)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .stroke(QuietlineTheme.border, lineWidth: 1)
                 )
         )
